@@ -1,14 +1,15 @@
-#include<iostream>
+ï»¿#include<iostream>
 #include<math.h>
 using namespace std;
 
 
-class Point  // Ñîçäàåì ñòðóêòóðó 'Point', êîòîðàÿ áóäåò îïèñûâàòü òî÷êè íà ïëîñêîñòè
+class Point  // Ð¡Ð¾Ð·Ð´Ð°ÐµÐ¼ ÑÑ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ñƒ 'Point', ÐºÐ¾Ñ‚Ð¾Ñ€Ð°Ñ Ð±ÑƒÐ´ÐµÑ‚ Ð¾Ð¿Ð¸ÑÑ‹Ð²Ð°Ñ‚ÑŒ Ñ‚Ð¾Ñ‡ÐºÐ¸ Ð½Ð° Ð¿Ð»Ð¾ÑÐºÐ¾ÑÑ‚Ð¸
 {
 	double x;
 	double y;
 
 public:
+
 	//Point() { x = 0; y = 0; }; // default constructor 
 
 	//Point(double X, double Y)   // constructor 2
@@ -20,7 +21,6 @@ public:
 	//Point(double X, double Y) :x(X), y(Y) {}; //constructor with member initialization list functional form
 
 	Point(double X, double Y) :x{ X }, y{ Y } {}; // uniform initializer syntax
-
 
 	double get_x() const
 	{
@@ -38,21 +38,6 @@ public:
 	{
 		this -> y = y;
 	}
-	/*template <typename T>  T Power(T num, int n)
-	{
-		double pow = 1;
-		if (n < 0)
-		{
-			num = 1 / num;
-			n = -n;
-		}
-		for (int i = 0; i < n; i++)
-		{
-			pow *= num;
-		}
-		return pow;
-	}*/
-	
 	double distance();
 };
 
@@ -65,10 +50,10 @@ void main()
 	setlocale(LC_ALL, "");
 #ifdef STRUCT_POINT
 	cout << "Hello OOP" << endl;
-	int a;      // Îáúÿâëåíèå ïåðåìåííîé 'a' òèïà 'int'
-	Point A;    // Îáúÿâëåíèå ïåðåìåííîé 'A' òèïà 'Point'
-	// Ñîçäàíèå îáúåêòà 'A' ñòðóêòóðû 'Point'
-	// Ñîçäàíèå ýêçåìïëÿðà ñòðóêòóðû 'Point'
+	int a;      // ÐžÐ±ÑŠÑÐ²Ð»ÐµÐ½Ð¸Ðµ Ð¿ÐµÑ€ÐµÐ¼ÐµÐ½Ð½Ð¾Ð¹ 'a' Ñ‚Ð¸Ð¿Ð° 'int'
+	Point A;    // ÐžÐ±ÑŠÑÐ²Ð»ÐµÐ½Ð¸Ðµ Ð¿ÐµÑ€ÐµÐ¼ÐµÐ½Ð½Ð¾Ð¹ 'A' Ñ‚Ð¸Ð¿Ð° 'Point'
+	// Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð¾Ð±ÑŠÐµÐºÑ‚Ð° 'A' ÑÑ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ñ‹ 'Point'
+	// Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ ÑÐºÐ·ÐµÐ¼Ð¿Ð»ÑÑ€Ð° ÑÑ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ñ‹ 'Point'
 	A.x = 2;
 	A.y = 3;
 	cout << A.x << "\t" << A.y << endl;
@@ -76,13 +61,14 @@ void main()
 	cout << sizeof(A) << endl;
 
 	Point* pA = &A;
-	cout << (*pA).x << "\t" << (*pA).y << endl;  // îäíî è òî æå
-	cout << pA->x << "\t" << pA->y << endl;      //  îäíî è òî æå  
+	cout << (*pA).x << "\t" << (*pA).y << endl;  // Ð¾Ð´Ð½Ð¾ Ð¸ Ñ‚Ð¾ Ð¶Ðµ
+	cout << pA->x << "\t" << pA->y << endl;      //  Ð¾Ð´Ð½Ð¾ Ð¸ Ñ‚Ð¾ Ð¶Ðµ  
 #endif // STRUCT_POINT
 
 	Point A{3, 4};    //  uniform init  defoult constructor called
 	//Point B(8,6);  // functional form initialization defoult constructor NOT called
 	Point B{8, 9}; 
+
 	/*A.set_x(2);
 	A.set_y(3);
 	B.set_x(5);
