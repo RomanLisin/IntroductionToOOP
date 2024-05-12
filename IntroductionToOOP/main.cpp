@@ -1,11 +1,16 @@
 ﻿#include<iostream>
 #include<math.h>
 using namespace std;
+using std::cin;
+using std::cout;
+using std::endl;;
 
 #define delimiter "\n--------------------------------------------------------------------"
 //#define DISTANCE_CHEK
 //#define STRUCT_POINT
 //#define CONSTRUCTORS_CHECK
+//#define ASSINGMENT_CHECK
+//#define OPERATORS_CHECK
 class Point  // Создаем структуру 'Point', которая будет описывать точки на плоскости
 {
 	double x;
@@ -77,6 +82,26 @@ public:
 		cout << "CopyAssignment:\t" << this << endl;
 		return *this;
 	}
+	Point& operator++() // Prefix increment
+	{
+		x++;
+		y++;
+		return *this;
+	}
+	Point operator++(int) // Suffix increment
+	{
+		Point old = *this;
+		x++;
+		y++;
+		return old;
+	}
+	Point& operator()(double x, double y)
+	{
+		//Function-call operator
+		set_x(x);
+		set_y(y);
+		return *this;
+	}
 
 	//									Methods
 	double distance(const Point& other) const
@@ -85,7 +110,7 @@ public:
 		double y_distance = this->y - other.y;
 		//other.y *= 10;
 		//this->y *= 10;
-		
+
 		double distance = sqrt(x_distance * x_distance + y_distance * y_distance);
 		return distance;
 	}
@@ -102,8 +127,43 @@ double distance(const Point& A, const Point& B)
 	double distance = sqrt(x_distance * x_distance + y_distance * y_distance);
 	return distance;
 }
+Point operator+(const Point& left, const Point& right)
+{
+	Point result;
+	result.set_x(left.get_x() + right.get_x());
+	result.set_y(left.get_y() + right.get_y());
+	return result;
 
+}
+bool operator==(const Point& left, const Point& right)
+{
+	/*if (left.get_x() == right.get_x() && left.get_y() == right.get_y())
+		return true;
+	else
+		return false;*/
+	return left.get_x() == right.get_x() && left.get_y() == right.get_y();
+}
+std::ostream& operator<<(std::ostream& os, const Point& obj)
+{
+	return os << "X = " << obj.get_x() << "\tY = " << obj.get_y();
+	//return os;
+}
+//std::ostream& operator>>(std::ostream& os, const Point& obj)
+//{
+//	os >> obj.set_x() >> obj.set_y();
+//	return os;
+//
+//	//return os;
+//}
 
+std::istream& operator>>(std::istream& is, Point& obj) // const не ставим так как принимаемый объект изменяется
+{
+	double x, y;
+	is >> x >> y;
+	obj.set_x(x);
+	obj.set_y(y);
+	return is;
+}
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -132,11 +192,11 @@ void main()
 
 	//Point A{ 2, 3 };    //  uniform init  defoult constructor called
 	//Point B(8,6);  // functional form initialization defoult constructor NOT called
-	
+
 	Point B;
 	B.set_x(7);
 	B.set_x(8);
-	
+
 	//Point B{ 7, 8 };
 
 	/*
@@ -192,16 +252,37 @@ D.print();
 //Point B;
 //B = A; // CopyAssignment
 
+#ifdef ASSINGMENT_CHECK
 int a, b, c;
-a = b = c=0;
+a = b = c = 0;
 cout << a << "\t" << b << "\t" << c << endl;
 
 
 Point A, B, C;
-A = B = C = Point(2,3);   ///  ?????
+A = B = C = Point(2, 3);   ///  ?????
 A.print();
 B.print();
 C.print();
+#endif // ASSINGMENT_CHECK
+#ifdef OPERATORS_CHECK
+
+Point A(2, 3);
+Point B(7, 8);
+Point C = A + B;
+A.print();
+B.print();
+C.print();
+Point D = ++C;
+C.print();
+D.print();
+cout << (C == D) << endl;
+
+
+#endif // OPERATORS_CHECK
+Point A(2, 3);
+cout << "Введите координаты точки: "; cin >> A;
+
+cout << A << endl;
 
 //Point(2, 3) ; здесь явно вызывается конструктор, и создается временный безымянный объект
 
