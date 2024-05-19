@@ -187,6 +187,13 @@ Fraction operator--(int)
 	denominator--;
 	return old;
 }
+Fraction& operator()(int integ, int numer, int denom)
+{
+	set_integer(integ);
+	set_numerator(numer);
+	set_denominator(denom);
+	return *this;
+}
 };
 
 //convert to improper (non-proper) fraction   // 6/4
@@ -329,11 +336,12 @@ std::ostream& operator<<(std::ostream& os, const Fraction& A)
 
 std::istream& operator>>(std::istream& is, Fraction& A)
 {
-	int inter, numer, denom;
-	is >> inter >> numer >> denom;
-	A.set_integer(inter);
+	int integ,numer, denom;
+	is >> integ>> numer >> denom;
+	A(integ, numer, denom);
+	/*A.set_integer(inter);
 	A.set_numerator(numer);
-	A.set_denominator(denom);
+	A.set_denominator(denom);*/
 	return is;
 }
 
