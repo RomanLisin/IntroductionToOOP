@@ -202,7 +202,7 @@ Fraction& convImpropFract(const Fraction& A)
 //     Arithmetic operators:
 
 //
-Fraction operator+(const Fraction& A, const Fraction& B)
+Fraction& operator+(const Fraction& A, const Fraction& B)
 {
 	Fraction Tmp, Tmp2;
 	convImpropFract(A);
@@ -214,7 +214,7 @@ Fraction operator+(const Fraction& A, const Fraction& B)
 	return Tmp;
 }
 
-Fraction operator-(const Fraction& A, const Fraction& B)
+Fraction& operator-(const Fraction& A, const Fraction& B)
 {
 	Fraction Tmp;
 	int dnm_1 = A.get_denominator();
@@ -253,7 +253,7 @@ Fraction operator-(const Fraction& A, const Fraction& B)
 
 }
 
-Fraction operator*(const Fraction& A,const Fraction& B)
+Fraction& operator*(const Fraction& A,const Fraction& B)
 {
 	 Fraction Tmp;
 	 Tmp.set_numerator(convImpropFract(A).get_numerator() * convImpropFract(B).get_numerator());
@@ -263,7 +263,7 @@ Fraction operator*(const Fraction& A,const Fraction& B)
 	 return Tmp;
 }
 
-Fraction operator/(const Fraction& A, const Fraction& B)
+Fraction& operator/(const Fraction& A, const Fraction& B)
 {
 	Fraction Tmp;
 	 Tmp.set_numerator(convImpropFract(A).get_numerator() * convImpropFract(B).get_denominator());
@@ -322,7 +322,9 @@ bool operator<=(const Fraction& A, const Fraction& B)
 
 std::ostream& operator<<(std::ostream& os, const Fraction& A)
 {
-	return os << "Integer" << A.get_integer() << "\t" << A.get_numerator() << "\t" << A.get_denominator();
+	return os << "Integer:\t" << A.get_integer() << endl 
+		<< "Numerator:\t"<< A.get_numerator() << endl
+		<<"Denominator:\t" << A.get_denominator()<< endl;
 }
 
 std::istream& operator>>(std::istream& is, Fraction& A)
@@ -330,7 +332,7 @@ std::istream& operator>>(std::istream& is, Fraction& A)
 	int inter, numer, denom;
 	is >> inter >> numer >> denom;
 	A.set_integer(inter);
-	A.set_integer(numer);
+	A.set_numerator(numer);
 	A.set_denominator(denom);
 	return is;
 }
@@ -341,38 +343,54 @@ void main()
 	setlocale(LC_ALL, "");
 
 	Fraction A; // Default constructor
+	cout << " A = ";
 	A.print();
 
 	Fraction B = 5; // Single-argument constructor
+	cout << " B = ";
 	B.print();
 
 	Fraction C(0,1, 2);
+	cout << " C = ";
 	C.print();
 
 	Fraction D(2, 1, 4);
+	cout << " D = ";
 	D.print();
 
 	Fraction E = D; // Copy constructor
+	cout << " E = D = ";
 	E.print();
 
 	Fraction F;
+	cout << " F = E = ";
 	F = E;			// Copy assignment
 	F.print();
 
-	 
+	 cout << " C = ";
 	 C.print();
+	 cout << " D = ";
 	 D.print();
 	 F = C+D;
+	 cout << " F = ";
 	 F.print();		
 	 F = C-D;
+	 cout << " F = C - D = ";
 	 F.print();		
+	 cout << " F = C * D = ";
 	 F = C*D;
 	 F.print();		
-	 F = C/D;
-	 F.print();		
+	 cout << " F = C / D = ";
+	 F = C / D;
+	 F.print();	
 
-	 cout << C.numA_commDenominator(D) << endl;
-	 cout << D.numA_commDenominator(C) << endl;
+	 cout << (C > D ? "false" : "true") << endl;
+
+	 cout << "Input Fract: "; cin >> F;
+	 cout << F << endl;
+	 F.print();
+
+
 	
 	  
 
