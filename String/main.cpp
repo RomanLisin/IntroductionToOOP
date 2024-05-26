@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
-#include <cstring>
+//#include <cstring>
+using namespace std;
 
 int sizeChStr(const char* str);
 void strCopy(char* to, const char* from);
@@ -70,15 +71,19 @@ public:
 		os << str.get_arrStr();
 		return os;
 	}
+
+
 void main() {
 	setlocale(LC_ALL, "");
+
 	String Str; // Default constructor creates an empty string of 80 characters
-	String str1 = "Hello";
-	String str2 = "World";
+	String str1 = "Hello"; // copy constructor
+	String str2 = "World"; // copy constructor
 	String str3 = str1 + str2;
-	std::cout << str3.sizeStr() << " " << str3 << std::endl;
+	cout << str3 << endl;
 
 }
+
 int sizeChStr(const char* str)
 {
 	int i = 0;
@@ -89,7 +94,7 @@ int sizeChStr(const char* str)
 void strCopy(char* to, const char* from)
 {
 	int i = 0;
-	while (from[i] != '\0') {
+	while (from[i]) {		//!= '\0') {
 		to[i] = from[i];
 		i++;
 	}
