@@ -17,6 +17,7 @@ public:
 	{
 		return arrStr;
 	}
+
 	// default constructor
 	String() : lenStr(80) {
 		arrStr = new char[lenStr];

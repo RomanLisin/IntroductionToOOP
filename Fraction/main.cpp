@@ -166,16 +166,12 @@ Fraction operator++(int)
 {
 	Fraction old = *this;
 	integer++;
-	numerator++;
-	denominator++;
 	return old;
 } 
 
 Fraction& operator--()
 {
 	integer--;
-	numerator--;
-	denominator--;
 	return *this;
 }
 
@@ -183,8 +179,6 @@ Fraction operator--(int)
 {
 	Fraction old = *this;
 	integer--;
-	numerator--;
-	denominator--;
 	return old;
 }
 Fraction& operator()(int integ, int numer, int denom)
