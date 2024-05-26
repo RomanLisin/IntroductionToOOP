@@ -52,7 +52,7 @@ public:
 	// concatenation operator
 	String operator+(const String& str) const {
 		String result;
-		result.lenStr = lenStr + str.lenStr - 1; // -1 to remove '\0'
+		result.lenStr = lenStr + str.lenStr ; // don't -1 to remove '\0' because we need insert ' '
 		result.arrStr = new char[result.lenStr];
 		strCopy(result.arrStr, arrStr);
 	https://cplusplus.com/reference/cstring/strcat/?kw=strcat
@@ -102,8 +102,8 @@ void concatenateStrings(char* to, const char* from)
 	while (to[toLen]) toLen++;  // != '\0') {toLen++; }
 	int fromLen = 0;
 	while (from[fromLen]) fromLen++;  // != '\0') {fromLen++; }
-	/*to[toLen] = ' ';
-	toLen++;*/
+	to[toLen] = ' ';
+	toLen++;
 	for (int i = 0; i < fromLen; i++) {
 		to[toLen + i] = from[i];
 	}
