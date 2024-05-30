@@ -188,6 +188,14 @@ Fraction& operator()(int integ, int numer, int denom)
 	set_denominator(denom);
 	return *this;
 }
+explicit operator int()
+{
+
+}
+operator double()
+{
+	return 
+}
 };
 
 //convert to improper (non-proper) fraction   // 6/4
