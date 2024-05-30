@@ -4,6 +4,7 @@
 //#include <cstring>
 using namespace std;
 //#define CONSTRUCTOR_CHECK;
+//#define OPERATOR_PLUS_CHECK
 
 //int sizeChStr(const char* str);
 //void strCopy(char* to, const char* from);
@@ -34,55 +35,27 @@ public:
 
 	explicit String(int size = 80):lenStr(size), arrStr(new char[size]{})
 	{
-		//this->lenStr = size;
-		//this->arrStr = new char[size] {};  //   чтобы создаваемая строка не была заплнена мусором после оператора скобочки ставим фигурные скобки, в этом случае строка заполняется нулями, но при выводе они не отображаются
 		cout << "DefaultConstractor:\t" << this << endl;
 	}
 
-	//String() : lenStr(80) {
-	//	arrStr = new char[lenStr];
-	//	for (int i = 0; i < lenStr; i++) {
-	//		arrStr[i] = (i == lenStr - 1 ? '\0' :' '); // Initialize with spaces
-	//	}
-	//}
-	// constructor 
-	String(const char* str) :lenStr(strlen(str)+1),arrStr(new char[lenStr]{})
+	String(const char* str) : String(strlen(str)+1)   //:lenStr(strlen(str)+1),arrStr(new char[lenStr]{})
 	{
-
-		//this->lenStr = strlen(str) + 1;  // strlen -  считает размер строки в символах
-		//this->arrStr = new char[lenStr] {};
 		for (int i = 0; i < str[i]; i++)this->arrStr[i] = str[i];
 		cout << "Constructor:\t\t" << this << endl;
-
-		/*lenStr = sizeChStr(str) + 1;
-		arrStr = new char[lenStr];
-		strCopy(arrStr, str);*/
 	}
 
 	//copy constructor  -  всегда принимает константную ссылку на объект
 // The rule of three   -  если в классе есть динамическая память, то в классе должны быть конструктор копирования, оператор присваивания и деструктор
 // The rule of zero    -  если динамическая память отсутствует , CopyConstructor, CopyAssignment, Destructor - не нужны
 
-	String(const String& other):lenStr(other.lenStr),arrStr(new char[lenStr]{})
+	String(const String& other) : String(other.lenStr)            //:lenStr(other.lenStr),arrStr(new char[lenStr]{})
 	{
-		//this->lenStr = other.lenStr;
-		// Deep copy - побитовое копирование:
-		// 1) выделяем новую память:
-		//this->arrStr = new char[lenStr] {};    //  то бишь два объекта не используют одну и ту же память
-		// 2) Копируем содержимое этой памяти из другого объекта:
-		for (int i = 0; other.arrStr[i]; i++)this->arrStr[i] = other.arrStr[i]; // вместо other.arrStr[i] - (до null-terminator) можно поставить и будет вернее  i < lenStr;
+		//for (int i = 0; other.arrStr[i]; i++)this->arrStr[i] = other.arrStr[i]; // вместо other.arrStr[i] - (до null-terminator) можно поставить и будет вернее  i < lenStr;
 		cout << "CopyConstructor:\t" << this << endl;
-
-		//strcpy(arrStr, other.arrStr);
 	}
 
 	String(String&& other):lenStr(other.lenStr),arrStr(other.arrStr)
 	{
-		// Shallow copy:
-		//this->lenStr = other.lenStr;
-		//this->arrStr = other.arrStr; // shalow copy
-		// MoveConstructor должен работать так, как НЕ должен работать CopyConstructor
-		// После копирования удаляемый объект обязательно нужно обнулить:
 		other.arrStr = nullptr;
 		other.lenStr = 0;
 		cout << "MoveConstructor:\t\t" << this << endl;
@@ -104,9 +77,7 @@ public:
 		this->arrStr = new char[lenStr] {}; // если не ставить фигурные скобки , то вывод неправильный, т.е. сразу не инициализируетс, поэтому заполнение происходить относительно мусора, поэтому в итоге получаем неправильный вывод- мусор
 		for (int i = 0; other.arrStr[i]; i++)this->arrStr[i] = other.arrStr[i];  // вместо other.arrStr[i] - (до null-terminator) можно поставить и будет вернее  i < lenStr;
 		cout << "CopyAssignment:\t\t" << this << endl;
-		//strcpy(arrStr, str.arrStr);
-		//strCopy(arrStr, str.arrStr);
-		
+	
 	}
 	String& operator=(String&& other)
 	{
@@ -135,22 +106,6 @@ public:
 		cout << "Size:\t" << lenStr << endl;
 		cout << "arrStr:\t" << arrStr << endl;
 	}
-	// concatenation operator
-	//String operator+(const String& str) const {
-	//	String result;
-	//	result.lenStr = lenStr + str.lenStr-1; //  -1 to remove '\0' because we need insert ' '
-	//	result.arrStr = new char[result.lenStr];
-	//	strcpy(result.arrStr, str.arrStr);
-	//	//strCopy(result.arrStr, arrStr);
-	//https://cplusplus.com/reference/cstring/strcat/?kw=strcat
-	//	//strcat(result.arrStr, str.arrStr);
-	//	concatenateStrings(result.arrStr, str.arrStr);
-	//	return result;
-	//}
-	// get length of string
-	//int sizeStr() const {
-	//	return lenStr-1; // -1 to exclude '\0'
-	//}
 };
 	// Output operator
 	std::ostream& operator<<(std::ostream& os, const String& str) 
@@ -203,6 +158,7 @@ public:
 
 #endif // CONSTRUCTOR_CHECK
 	
+#ifdef OPERATOR_PLUS_CHECK
 		String str1 = "Hello";
 		String str2 = "World";
 		std::cout << str1 << endl;
@@ -211,6 +167,14 @@ public:
 		String str3;
 		str3 = str1 + str2;
 		std::cout << str3 << endl;
+#endif // OPERATOR_PLUS_CHECK
+
+		String str1 = "Delegation";
+		cout << "\n------------------------------------------\n";
+		String str2 = str1;
+		cout << "\n------------------------------------------\n";
+		cout << str2 << endl;
+
 	}
 
 /*
@@ -222,24 +186,6 @@ Shallow copy - поверхностное копирование
 r-value reference на объект нашего класса
 -------------------------------
 */
-
-
-//int sizeChStr(const char* str)
-//{
-//	int i = 0;
-//	while (str[++i]);
-//	return i;
-//}
-
-//void strCopy(char* to, const char* from)
-//{
-//	int i = 0;
-//	while (from[i]) {		//!= '\0') {
-//		to[i] = from[i];
-//		i++;
-//	}
-//	to[i] = '\0'; // null-terminate the to string
-//}
 
 void concatenateStrings(char* to, const char* from) 
 {
