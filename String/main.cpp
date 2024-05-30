@@ -32,10 +32,10 @@ public:
 	}
 	//  constructors:
 
-	explicit String(int size = 80)
+	explicit String(int size = 80):lenStr(size), arrStr(new char[size]{})
 	{
-		this->lenStr = size;
-		this->arrStr = new char[size] {};  //   чтобы создаваемая строка не была заплнена мусором после оператора скобочки ставим фигурные скобки, в этом случае строка заполняется нулями, но при выводе они не отображаются
+		//this->lenStr = size;
+		//this->arrStr = new char[size] {};  //   чтобы создаваемая строка не была заплнена мусором после оператора скобочки ставим фигурные скобки, в этом случае строка заполняется нулями, но при выводе они не отображаются
 		cout << "DefaultConstractor:\t" << this << endl;
 	}
 
@@ -46,10 +46,11 @@ public:
 	//	}
 	//}
 	// constructor 
-	String(const char* str) {
+	String(const char* str) :lenStr(strlen(str)+1),arrStr(new char[lenStr]{})
+	{
 
-		this->lenStr = strlen(str) + 1;  // strlen -  считает размер строки в символах
-		this->arrStr = new char[lenStr] {};
+		//this->lenStr = strlen(str) + 1;  // strlen -  считает размер строки в символах
+		//this->arrStr = new char[lenStr] {};
 		for (int i = 0; i < str[i]; i++)this->arrStr[i] = str[i];
 		cout << "Constructor:\t\t" << this << endl;
 
@@ -62,12 +63,12 @@ public:
 // The rule of three   -  если в классе есть динамическая память, то в классе должны быть конструктор копирования, оператор присваивания и деструктор
 // The rule of zero    -  если динамическая память отсутствует , CopyConstructor, CopyAssignment, Destructor - не нужны
 
-	String(const String& other)
+	String(const String& other):lenStr(other.lenStr),arrStr(new char[lenStr]{})
 	{
-		this->lenStr = other.lenStr;
+		//this->lenStr = other.lenStr;
 		// Deep copy - побитовое копирование:
 		// 1) выделяем новую память:
-		this->arrStr = new char[lenStr] {};    //  то бишь два объекта не используют одну и ту же память
+		//this->arrStr = new char[lenStr] {};    //  то бишь два объекта не используют одну и ту же память
 		// 2) Копируем содержимое этой памяти из другого объекта:
 		for (int i = 0; other.arrStr[i]; i++)this->arrStr[i] = other.arrStr[i]; // вместо other.arrStr[i] - (до null-terminator) можно поставить и будет вернее  i < lenStr;
 		cout << "CopyConstructor:\t" << this << endl;
@@ -75,11 +76,11 @@ public:
 		//strcpy(arrStr, other.arrStr);
 	}
 
-	String(String&& other)
+	String(String&& other):lenStr(other.lenStr),arrStr(other.arrStr)
 	{
 		// Shallow copy:
-		this->lenStr = other.lenStr;
-		this->arrStr = other.arrStr; // shalow copy
+		//this->lenStr = other.lenStr;
+		//this->arrStr = other.arrStr; // shalow copy
 		// MoveConstructor должен работать так, как НЕ должен работать CopyConstructor
 		// После копирования удаляемый объект обязательно нужно обнулить:
 		other.arrStr = nullptr;
