@@ -14,7 +14,7 @@ class Matrix {
 
     bool allocate(int height, int width) 
     {
-        if (height <= 0 && width <= 0) 
+        if (height <= 0 || width <= 0) 
         {
             return false;
         }
@@ -55,7 +55,7 @@ class Matrix {
     }
 
 public:
-    Matrix inverse()const;
+    Matrix inverted()const;
 
       int get_width() const
       {
@@ -94,6 +94,7 @@ public:
     }
     Matrix(const Matrix& matrix) 
     {
+        //if (this == &matrix) return *this;
         clear();
         allocate(matrix.height, matrix.width);
         copyTo(matrix.m);
@@ -127,12 +128,17 @@ public:
         {
             cout << "Empty matrix" << endl;
         }
-        for (int j = 0; j < height; j++) {
-            for (int i = 0; i < width; i++) {
-                cout << "\t" << m[j][i];
+        else 
+        {
+            for (int j = 0; j < height; j++)
+            {
+                for (int i = 0; i < width; i++)
+                {
+                    cout << "\t" << m[j][i];
+                }
+                cout << endl;
             }
-            cout << endl;
-        }
+         }
     }
 
     void randomize()
@@ -216,7 +222,7 @@ public:
         {
             cout << "Matrix dimensions mismatch";
         }
-        Matrix inverseOther = other.inverse();
+        Matrix inverseOther = other.inverted();
         return (*this) * inverseOther;
     }
     Matrix& operator+=(const Matrix& other) 
@@ -334,7 +340,7 @@ void main()
 
 }
 
-Matrix Matrix::inverse() const {
+Matrix Matrix::inverted() const {
     int n = width;
     Matrix L(n, n);
     Matrix U(n, n);
